@@ -1,0 +1,36 @@
+{
+    "name": "reishou/unique-identity",
+    "description": "Unique Identity for laravel model",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Reishou",
+            "email": "reishou90@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Reishou\\UniqueIdentity\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Reishou\\UniqueIdentity\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Reishou\\UniqueIdentity\\UniqueIdentityServiceProvider"
+            ]
+        }
+    }
+}
