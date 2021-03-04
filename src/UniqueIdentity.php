@@ -4,13 +4,24 @@ namespace Reishou\UniqueIdentity;
 
 use Carbon\Carbon;
 
+/**
+ * Class UniqueIdentity
+ *
+ * @package Reishou\UniqueIdentity
+ */
 class UniqueIdentity
 {
+    /**
+     * @var int
+     */
     private $epoch;
 
+    /**
+     * UniqueIdentity constructor.
+     */
     public function __construct()
     {
-        $this->epoch = config('unique-identity.epoch');
+        $this->epoch = config('uid.epoch');
     }
 
     /**
@@ -25,8 +36,8 @@ class UniqueIdentity
         $seqId = $nextSequenceId % 1024;
 
         $id = $time << 23;
-        $id = $id | ($shardId << 10);
-        $id = $id | ($seqId);
+        $id |= ($shardId << 10);
+        $id |= ($seqId);
 
         return $id;
     }

@@ -6,17 +6,64 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Trait HasUniqueIdentity
+ *
+ * @package Reishou\UniqueIdentity
+ */
 trait HasUniqueIdentity
 {
+    /**
+     * @var bool
+     */
     public $incrementing = false;
+
+    /**
+     * Booting HasUniqueIdentity
+     */
+    public static function bootHasUniqueIdentity()
+    {
+        static::creating(
+            function (Model $model) {
+                if (!$model->getIncrementing()) {
+                    $model->{$model->getKeyName()} = $this->uid();
+                }
+            }
+        );
+    }
+
+    /**
+     * @param int $count
+     * @return array
+     */
+    protected function uid(int $count = 1): array
+    {
+        $next      = $this->getNextSequence($count);
+        $generator = $this->getUidGenerator();
+
+        return array_map(
+            function ($cnt) use ($generator) {
+                return $generator->id($cnt);
+            },
+            range($next - $count + 1, $next)
+        );
+    }
+
+    /**
+     * @return UniqueIdentity
+     */
+    protected function getUidGenerator(): UniqueIdentity
+    {
+        return new UniqueIdentity();
+    }
 
     /**
      * @param int $count
      * @return mixed
      */
-    private function getNextSequence($count = 1)
+    private function getNextSequence(int $count = 1)
     {
-        $table = $this->getTableName();
+        $table = $this->getTable();
 
         return DB::transaction(
             function () use ($count, $table) {
@@ -41,18 +88,20 @@ trait HasUniqueIdentity
      */
     private function updateEntitySequence($sequence, $count)
     {
-        DB::table('entity_sequences')
+        DB::table(config('uid.entity_table'))
+            ->useWritePdo()
             ->where('entity', $sequence->entity)
             ->update(['next_value' => $sequence->next_value + $count]);
     }
 
     /**
-     * @param $table
-     * @param $count
+     * @param string $table
+     * @param int    $count
      */
-    private function createEntitySequence($table, $count)
+    private function createEntitySequence(string $table, int $count)
     {
-        DB::table('entity_sequences')
+        DB::table(config('uid.entity_table'))
+            ->useWritePdo()
             ->insert(
                 [
                     'entity'     => $table,
@@ -62,23 +111,16 @@ trait HasUniqueIdentity
     }
 
     /**
-     * @param $table
+     * @param string $table
      * @return Model|Builder|object|null
      */
-    private function getFirstEntitySequence($table)
+    private function getFirstEntitySequence(string $table)
     {
-        return DB::table('entity_sequences')
+        return DB::table(config('uid.entity_table'))
+            ->useWritePdo()
             ->select('next_value')
             ->where('entity', $table)
             ->lockForUpdate()
             ->first();
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function getTableName()
-    {
-        return with(new static())->getTable();
     }
 }
