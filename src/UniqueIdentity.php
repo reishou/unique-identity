@@ -6,17 +6,22 @@ use Carbon\Carbon;
 
 class UniqueIdentity
 {
-    public const OUR_EPOCH = 1606089600000; // 2020/11/23 00:00:00
+    private $epoch;
+
+    public function __construct()
+    {
+        $this->epoch = config('unique-identity.epoch');
+    }
 
     /**
      * @param  int  $nextSequenceId
      * @param  int  $shardId
      * @return int
      */
-    public static function id(int $nextSequenceId, int $shardId = 1)
+    public function id(int $nextSequenceId, int $shardId = 1): int
     {
         $now   = Carbon::now()->valueOf();
-        $time  = $now - self::OUR_EPOCH;
+        $time  = $now - $this->epoch;
         $seqId = $nextSequenceId % 1024;
 
         $id = $time << 23;
@@ -30,7 +35,7 @@ class UniqueIdentity
      * @param  int  $id
      * @return array
      */
-    public static function decompose(int $id)
+    public function decompose(int $id): array
     {
         $time    = ($id >> 23) & 0x1FFFFFFFFFF;
         $shardId = ($id >> 10) & 0x1FFF;
