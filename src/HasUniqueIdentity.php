@@ -14,20 +14,14 @@ use Illuminate\Support\Facades\DB;
 trait HasUniqueIdentity
 {
     /**
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
      * Booting HasUniqueIdentity
      */
     public static function bootHasUniqueIdentity()
     {
         static::creating(
             function (Model $model) {
-                if (!$model->getIncrementing()) {
-                    $model->{$model->getKeyName()} = $this->uid();
-                }
+                $model->setIncrementing(false);
+                $model->{$model->getKeyName()} = $model->uid()[0];
             }
         );
     }
@@ -104,7 +98,7 @@ trait HasUniqueIdentity
             ->useWritePdo()
             ->insert(
                 [
-                    'entity'     => $table,
+                    'entity' => $table,
                     'next_value' => $count + 1,
                 ]
             );
@@ -118,7 +112,6 @@ trait HasUniqueIdentity
     {
         return DB::table(config('uid.entity_table'))
             ->useWritePdo()
-            ->select('next_value')
             ->where('entity', $table)
             ->lockForUpdate()
             ->first();
