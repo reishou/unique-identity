@@ -47,7 +47,7 @@ class TableCommand extends Command
     {
         parent::__construct();
 
-        $this->files = $files;
+        $this->files    = $files;
         $this->composer = $composer;
     }
 
@@ -62,7 +62,9 @@ class TableCommand extends Command
         $table = $this->laravel['config']['uid.entity_table'];
 
         $this->replaceMigration(
-            $this->createBaseMigration($table), $table, Str::studly($table)
+            $this->createBaseMigration($table),
+            $table,
+            Str::studly($table)
         );
 
         $this->info('Migration created successfully!');
@@ -73,13 +75,14 @@ class TableCommand extends Command
     /**
      * Create a base migration file for the table.
      *
-     * @param  string  $table
+     * @param string $table
      * @return string
      */
     protected function createBaseMigration($table = 'jobs'): string
     {
         return $this->laravel['migration.creator']->create(
-            'create_'.$table.'_table', $this->laravel->databasePath().'/migrations'
+            'create_' . $table . '_table',
+            $this->laravel->databasePath() . '/migrations'
         );
     }
 
@@ -97,7 +100,7 @@ class TableCommand extends Command
         $stub = str_replace(
             ['{{table}}', '{{tableClassName}}'],
             [$table, $tableClassName],
-            $this->files->get(__DIR__.'/stubs/entity.stub')
+            $this->files->get(__DIR__ . '/stubs/entity.stub')
         );
 
         $this->files->put($path, $stub);

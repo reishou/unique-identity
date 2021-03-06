@@ -29,7 +29,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Reishou\\UniqueIdentity\\UniqueIdentityServiceProvider"
+                "Reishou\\UniqueIdentity\\UidServiceProvider"
             ]
         }
     }

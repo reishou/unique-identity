@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\DB;
 /**
  * Trait HasUniqueIdentity
  *
- * @package Reishou\UniqueIdentity
+ * @package Reishou\Uid
  */
-trait HasUniqueIdentity
+trait HasUid
 {
     /**
-     * Booting HasUniqueIdentity
+     * Booting HasUid
      */
-    public static function bootHasUniqueIdentity()
+    public static function bootHasUid()
     {
         static::creating(
             function (Model $model) {
@@ -44,11 +44,11 @@ trait HasUniqueIdentity
     }
 
     /**
-     * @return UniqueIdentity
+     * @return Uid
      */
-    protected function getUidGenerator(): UniqueIdentity
+    protected function getUidGenerator(): Uid
     {
-        return new UniqueIdentity();
+        return new Uid();
     }
 
     /**
