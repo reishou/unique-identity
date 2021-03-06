@@ -14,7 +14,8 @@
     },
     "require-dev": {
         "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.4"
+        "phpunit/phpunit": "^9.4",
+        "squizlabs/php_codesniffer": "^3.5"
     },
     "autoload": {
         "psr-4": {
@@ -34,8 +35,8 @@
         }
     },
     "scripts": {
-        "check-style": "phpcs -p --standard=PSR12 config/ src/ tests/",
-        "fix-style": "phpcbf -p --standard=PSR12 config/ src/ tests/",
+        "check-style": "vendor/bin/phpcs -p --standard=ruleset.xml",
+        "fix-style": "vendor/bin/phpcbf -p --standard=ruleset.xml",
         "test": "vendor/bin/phpunit"
     }
 }

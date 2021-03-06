@@ -113,7 +113,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 [original-article]: https://instagram-engineering.com/sharding-ids-at-instagram-1cf5a71e5a5c
 [ico-version]: https://img.shields.io/packagist/v/reishou/unique-identity.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-gha]: https://github.com/reishou/unique-identity/workflows/Tests/badge.svg
+[ico-gha]: https://github.com/reishou/unique-identity/actions/workflows/php.yml/badge.svg
 [ico-downloads]: https://img.shields.io/packagist/dt/reishou/unique-identity.svg?style=flat-square
 [link-packagist]: https://packagist.org/packages/reishou/unique-identity
 [link-gha]: https://github.com/reishou/unique-identity/actions

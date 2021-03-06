@@ -19,5 +19,4 @@ class TableCommandTest extends TestCase
         $migrations = File::glob($dbpath . '*' . 'create_' . $table . '_table.php');
         $this->assertCount(1, $migrations);
     }
-
 }
