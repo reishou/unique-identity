@@ -5,11 +5,11 @@ namespace Reishou\UniqueIdentity;
 use Carbon\Carbon;
 
 /**
- * Class UniqueIdentity
+ * Class Uid
  *
  * @package Reishou\UniqueIdentity
  */
-class UniqueIdentity
+class Uid
 {
     /**
      * @var int
@@ -17,7 +17,7 @@ class UniqueIdentity
     private $epoch;
 
     /**
-     * UniqueIdentity constructor.
+     * Uid constructor.
      */
     public function __construct()
     {

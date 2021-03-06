@@ -9,14 +9,14 @@ use Illuminate\Support\Facades\DB;
 /**
  * Trait HasUniqueIdentity
  *
- * @package Reishou\UniqueIdentity
+ * @package Reishou\Uid
  */
-trait HasUniqueIdentity
+trait HasUid
 {
     /**
-     * Booting HasUniqueIdentity
+     * Booting HasUid
      */
-    public static function bootHasUniqueIdentity()
+    public static function bootHasUid()
     {
         static::creating(
             function (Model $model) {
@@ -28,27 +28,28 @@ trait HasUniqueIdentity
 
     /**
      * @param int $count
+     * @param int $shardId
      * @return array
      */
-    protected function uid(int $count = 1): array
+    protected function uid(int $count = 1, int $shardId = 1): array
     {
         $next      = $this->getNextSequence($count);
         $generator = $this->getUidGenerator();
 
         return array_map(
-            function ($cnt) use ($generator) {
-                return $generator->id($cnt);
+            function ($cnt) use ($generator, $shardId) {
+                return $generator->id($cnt, $shardId);
             },
             range($next - $count + 1, $next)
         );
     }
 
     /**
-     * @return UniqueIdentity
+     * @return Uid
      */
-    protected function getUidGenerator(): UniqueIdentity
+    protected function getUidGenerator(): Uid
     {
-        return new UniqueIdentity();
+        return new Uid();
     }
 
     /**
@@ -98,7 +99,7 @@ trait HasUniqueIdentity
             ->useWritePdo()
             ->insert(
                 [
-                    'entity' => $table,
+                    'entity'     => $table,
                     'next_value' => $count + 1,
                 ]
             );

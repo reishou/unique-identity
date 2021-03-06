@@ -1,6 +1,6 @@
 {
     "name": "reishou/unique-identity",
-    "description": "Unique Identity for laravel model",
+    "description": "Generator unique identity 64 bits and combine with laravel eloquent.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -29,7 +29,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Reishou\\UniqueIdentity\\UniqueIdentityServiceProvider"
+                "Reishou\\UniqueIdentity\\UidServiceProvider"
             ]
         }
     }

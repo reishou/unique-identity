@@ -3,7 +3,7 @@
 namespace Reishou\UniqueIdentity\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Reishou\UniqueIdentity\HasUniqueIdentity;
+use Reishou\UniqueIdentity\HasUid;
 
 /**
  * Class User
@@ -11,11 +11,11 @@ use Reishou\UniqueIdentity\HasUniqueIdentity;
  * @property int $id
  * @property string $name
  * @method static Model|User create($attributes)
- * @package Reishou\UniqueIdentity\Tests\Models
+ * @package Reishou\Uid\Tests\Models
  */
 class User extends Model
 {
-    use HasUniqueIdentity;
+    use HasUid;
 
     /**
      * @var string[]
