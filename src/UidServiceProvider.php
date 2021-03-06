@@ -24,7 +24,7 @@ class UidServiceProvider extends ServiceProvider
     {
         $this->publishes(
             [
-                __DIR__.'/../config/uid.php' => config_path('uid.php')
+                __DIR__ . '/../config/uid.php' => config_path('uid.php'),
             ]
         );
     }
