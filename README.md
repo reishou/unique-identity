@@ -34,7 +34,7 @@ Laravel uses Package Auto-Discovery, so doesn't require you to manually add the 
 Publish the config file with:
 
 ```shell
-php artisan vendor:publish --provider="Reishou\UniqueIdentity\UidServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Reishou\UniqueIdentity\UidServiceProvider"
 ```
 You can change `entity_table` name in `config/uid.php` (default `entity_sequences`).
 Then run command generate migration:
